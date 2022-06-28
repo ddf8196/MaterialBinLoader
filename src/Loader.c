@@ -26,12 +26,14 @@ G_DEFINE_TYPE_EXTENDED(LoaderInvocationListener,
 //==========================================================================================================================================
 
 #ifdef V1_18_32_02
-    #define RESOURCE_PACK_MANAGER_ADDRESS 0x3935E2C
-    #define READ_ASSET_FILE_ADDRESS 0x34B10A4
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x3935E2C + 1)
+    #define READ_ASSET_FILE_ADDRESS (minecraftpeBaseAddr + 0x34B10A4 + 1)
+    #define RESOURCE_LOCATION_ADDRESS (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC1ERKN4Core4PathE"))
 #endif
 #ifdef V1_19_2_02
-    #define RESOURCE_PACK_MANAGER_ADDRESS 0
-    #define READ_ASSET_FILE_ADDRESS 0
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x3AA8004 + 1)
+    #define READ_ASSET_FILE_ADDRESS (minecraftpeBaseAddr + 0x3632E54 + 1)
+    #define RESOURCE_LOCATION_ADDRESS (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC1ERKN4Core4PathE"))
 #endif
 
 typedef enum _HookId HookId;
@@ -48,7 +50,6 @@ struct _InvocationState {
 };
 
 GumAddress minecraftpeBaseAddr;
-GumAddress I18n_mResourcePackManager;
 GumAddress ResourcePackManager_ResourcePackManager;
 GumAddress AppPlatform_android23_readAssetFile;
 GumAddress ResourceLocation_ResourceLocation;
@@ -67,11 +68,9 @@ void __attribute__((constructor)) init() {
 
     minecraftpeBaseAddr = gum_module_find_base_address("libminecraftpe.so");
 
-    I18n_mResourcePackManager = gum_module_find_export_by_name("libminecraftpe.so", "_ZN4I18n20mResourcePackManagerE");
-
-    ResourcePackManager_ResourcePackManager = minecraftpeBaseAddr + RESOURCE_PACK_MANAGER_ADDRESS + 1;
-    AppPlatform_android23_readAssetFile = minecraftpeBaseAddr + READ_ASSET_FILE_ADDRESS + 1;
-    ResourceLocation_ResourceLocation = gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC1ERKN4Core4PathE");
+    ResourcePackManager_ResourcePackManager = RESOURCE_PACK_MANAGER_ADDRESS;
+    AppPlatform_android23_readAssetFile = READ_ASSET_FILE_ADDRESS;
+    ResourceLocation_ResourceLocation = RESOURCE_LOCATION_ADDRESS;
 
     interceptor = gum_interceptor_obtain();
     listener = g_object_new(LOADER_TYPE_INVOCATION_LISTENER, NULL);
