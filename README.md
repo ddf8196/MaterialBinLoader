@@ -8,6 +8,9 @@
 4. 将修改完的libminecraftpe.so和libmaterialbinloader-版本-架构.so打包回apk中
 5. 签名，安装
 
+## 文件位置
+将.material.bin文件放入资源包的renderer/materials即可（与assets中目录结构相同）
+
 ## 编译
 1. 安装[Android NDK](https://developer.android.google.cn/ndk/downloads/index.html)
 2. `./build.bat`
