@@ -35,6 +35,11 @@ G_DEFINE_TYPE_EXTENDED(LoaderInvocationListener,
     #define READ_ASSET_FILE_ADDRESS (minecraftpeBaseAddr + 0x3632E54 + 1)
     #define RESOURCE_LOCATION_ADDRESS (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC1ERKN4Core4PathE"))
 #endif
+#ifdef V1_19_11_01
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x3EBC000 + 1)
+    #define READ_ASSET_FILE_ADDRESS (minecraftpeBaseAddr + 0x37282F4 + 1)
+    #define RESOURCE_LOCATION_ADDRESS (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC1ERKN4Core4PathE"))
+#endif
 
 typedef enum _HookId HookId;
 enum _HookId {
