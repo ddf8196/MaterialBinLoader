@@ -25,20 +25,10 @@ G_DEFINE_TYPE_EXTENDED(LoaderInvocationListener,
 
 //==========================================================================================================================================
 
-#ifdef V1_18_32_02
-    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x3935E2C + 1)
-    #define READ_ASSET_FILE_ADDRESS (minecraftpeBaseAddr + 0x34B10A4 + 1)
-    #define RESOURCE_LOCATION_ADDRESS (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC1ERKN4Core4PathE"))
-#endif
-#ifdef V1_19_2_02
-    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x3AA8004 + 1)
-    #define READ_ASSET_FILE_ADDRESS (minecraftpeBaseAddr + 0x3632E54 + 1)
-    #define RESOURCE_LOCATION_ADDRESS (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC1ERKN4Core4PathE"))
-#endif
-#ifdef V1_19_11_01
-    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x3EBC000 + 1)
-    #define READ_ASSET_FILE_ADDRESS (minecraftpeBaseAddr + 0x37282F4 + 1)
-    #define RESOURCE_LOCATION_ADDRESS (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC1ERKN4Core4PathE"))
+#ifdef V1_19_20_02
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x5624220)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x490044C)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
 #endif
 
 typedef enum _HookId HookId;
@@ -162,14 +152,14 @@ static void loader_invocation_listener_on_enter(GumInvocationListener* listener,
             }
             break;
         }
-        //std::string* AppPlatform::readAssetFile(std::string* retstr, AppPlatform* this, Core::Path* filename)
+        //std::string* AppPlatform::readAssetFile(AppPlatform* this, Core::Path* filename)
         case READ_ASSET_FILE: {
             InvocationState* state = GUM_IC_GET_INVOCATION_DATA(ic, InvocationState);
             state->redirect = false;
             state->filename = NULL;
             state->retstr = NULL;
 
-            void* filename = gum_invocation_context_get_nth_argument(ic, 2);
+            void* filename = gum_invocation_context_get_nth_argument(ic, 1);
             char* data = std_string_data(filename);
 
             size_t size = std_string_size(filename);
@@ -183,7 +173,7 @@ static void loader_invocation_listener_on_enter(GumInvocationListener* listener,
                 #endif
                 state->redirect = true;
                 state->filename = filename;
-                state->retstr = gum_invocation_context_get_nth_argument(ic, 0);
+                state->retstr = (void*)ic->cpu_context->x[8];
             }
 
             break;
@@ -198,7 +188,7 @@ static void loader_invocation_listener_on_leave(GumInvocationListener* listener,
         case RESOURCE_PACK_MANAGER: {
             break;
         }
-        //std::string* AppPlatform::readAssetFile(std::string* retstr, AppPlatform* this, Core::Path* filename)
+        //std::string* AppPlatform::readAssetFile(AppPlatform* this, Core::Path* filename)
         case READ_ASSET_FILE: {
             InvocationState* state = GUM_IC_GET_INVOCATION_DATA(ic, InvocationState);
 
