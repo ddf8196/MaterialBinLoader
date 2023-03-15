@@ -18,4 +18,6 @@ clang.exe %CLANG_OPTIONS% -DV1_19_62_01 ./src/*.c -o ./build/libmaterialbinloade
 clang.exe %CLANG_OPTIONS% -DV1_19_63_01 ./src/*.c -o ./build/libmaterialbinloader-1.19.63.01-arm64.so
 ::1.19.70.22 arm64-v8a
 clang.exe %CLANG_OPTIONS% -DV1_19_70_22 ./src/*.c -o ./build/libmaterialbinloader-1.19.70.22-arm64.so
+::1.19.70.02 arm64-v8a
+clang.exe %CLANG_OPTIONS% -DV1_19_70_02 ./src/*.c -o ./build/libmaterialbinloader-1.19.70.02-arm64.so
 
