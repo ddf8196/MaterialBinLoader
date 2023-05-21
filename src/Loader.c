@@ -90,6 +90,11 @@ G_DEFINE_TYPE_EXTENDED(LoaderInvocationListener,
     #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x7C4BFDC)
     #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
 #endif
+#ifdef V1_19_83_01
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x7C9D48C)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x7C4FC8C)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
 #ifdef V1_20_0_20
     #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x870D984)
     #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x86561C4)
