@@ -1,3 +1,5 @@
+简体中文 | [English](README_US.md) 
+
 # MaterialBinLoader
 让渲染龙从资源包读取.material.bin文件
 
