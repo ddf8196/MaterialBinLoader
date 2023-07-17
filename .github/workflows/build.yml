@@ -1,0 +1,30 @@
+name: Build MaterialBinLoader
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Android NDK >=23
+      # You may pin to the exact commit or the version.
+      # uses: anoop-b/setup-ndk@6f0ee78e62451cfec5f1698acb00b58d00a5d7b6
+    - uses: anoop-b/setup-ndk@V1.3.0
+      with:
+    # Exact version to use
+      ndk-version: r21e
+     # Add installation directory to the PATH
+      add-to-path:  # optional, default is true
+    # Use the local job cache on top of the runner tool cache
+      local-cache:  # optional, default is false
+      
+    - name: Build
+      run: .\build.bat
