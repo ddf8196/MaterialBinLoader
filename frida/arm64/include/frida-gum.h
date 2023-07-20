@@ -7735,7 +7735,7 @@ G_END_DECLS
 #define GLIB_AVAILABLE_TYPE_IN_2_76
 #endif
 
-//#include <time.h>
+#include <time.h>
 
 G_BEGIN_DECLS
 
