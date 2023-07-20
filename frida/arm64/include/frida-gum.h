@@ -4630,7 +4630,8 @@
 #define __GUM_H__
 
 /*
- * Copyright (C) 2008-2022 Ole André Vadla Ravnås <oleavr@nowsecure.com>
+ * Copyright (C) 2008-2023 Ole André Vadla Ravnås <oleavr@nowsecure.com>
+ * Copyright (C) 2023 Håvard Sørbø <havard@hsorbo.no>
  *
  * Licence: wxWindows Library Licence, Version 3.1
  */
@@ -35398,6 +35399,8 @@ GType gum_error_get_type (void) G_GNUC_CONST;
 #define GUM_TYPE_ERROR (gum_error_get_type ())
 GType gum_cpu_type_get_type (void) G_GNUC_CONST;
 #define GUM_TYPE_CPU_TYPE (gum_cpu_type_get_type ())
+GType gum_memory_access_get_type (void) G_GNUC_CONST;
+#define GUM_TYPE_MEMORY_ACCESS (gum_memory_access_get_type ())
 
 /* Enumerations from "gumelfmodule.h" */
 GType gum_elf_type_get_type (void) G_GNUC_CONST;
@@ -35438,6 +35441,8 @@ GType gum_replace_return_get_type (void) G_GNUC_CONST;
 /* Enumerations from "gumprocess.h" */
 GType gum_code_signing_policy_get_type (void) G_GNUC_CONST;
 #define GUM_TYPE_CODE_SIGNING_POLICY (gum_code_signing_policy_get_type ())
+GType gum_modify_thread_flags_get_type (void) G_GNUC_CONST;
+#define GUM_TYPE_MODIFY_THREAD_FLAGS (gum_modify_thread_flags_get_type ())
 GType gum_thread_state_get_type (void) G_GNUC_CONST;
 #define GUM_TYPE_THREAD_STATE (gum_thread_state_get_type ())
 G_END_DECLS
@@ -35616,6 +35621,11 @@ enum _GumCpuFeatures
   GUM_CPU_VFPD32          = 1 << 4,
   GUM_CPU_PTRAUTH         = 1 << 5,
 };
+
+typedef enum {
+  GUM_MEMORY_ACCESS_OPEN,
+  GUM_MEMORY_ACCESS_EXCLUSIVE,
+} GumMemoryAccess;
 
 enum _GumInstructionEncoding
 {
@@ -36354,7 +36364,7 @@ G_END_DECLS
 
 #endif
 /*
- * Copyright (C) 2008-2022 Ole André Vadla Ravnås <oleavr@nowsecure.com>
+ * Copyright (C) 2008-2023 Ole André Vadla Ravnås <oleavr@nowsecure.com>
  * Copyright (C) 2020 Francesco Tamagni <mrmacete@protonmail.ch>
  *
  * Licence: wxWindows Library Licence, Version 3.1
@@ -36389,6 +36399,11 @@ typedef enum {
   GUM_CODE_SIGNING_OPTIONAL,
   GUM_CODE_SIGNING_REQUIRED
 } GumCodeSigningPolicy;
+
+typedef enum {
+  GUM_MODIFY_THREAD_FLAGS_NONE         = 0,
+  GUM_MODIFY_THREAD_FLAGS_ABORT_SAFELY = (1 << 0),
+} GumModifyThreadFlags;
 
 typedef enum {
   GUM_THREAD_RUNNING = 1,
@@ -36524,7 +36539,7 @@ GUM_API GumProcessId gum_process_get_id (void);
 GUM_API GumThreadId gum_process_get_current_thread_id (void);
 GUM_API gboolean gum_process_has_thread (GumThreadId thread_id);
 GUM_API gboolean gum_process_modify_thread (GumThreadId thread_id,
-    GumModifyThreadFunc func, gpointer user_data);
+    GumModifyThreadFunc func, gpointer user_data, GumModifyThreadFlags flags);
 GUM_API void gum_process_enumerate_threads (GumFoundThreadFunc func,
     gpointer user_data);
 GUM_API gboolean gum_process_resolve_module_pointer (gconstpointer ptr,
@@ -39312,8 +39327,9 @@ G_END_DECLS
 
 #endif
 /*
- * Copyright (C) 2009-2022 Ole André Vadla Ravnås <oleavr@nowsecure.com>
+ * Copyright (C) 2009-2023 Ole André Vadla Ravnås <oleavr@nowsecure.com>
  * Copyright (C)      2010 Karl Trygve Kalleberg <karltk@boblycat.org>
+ * Copyright (C)      2023 Håvard Sørbø <havard@hsorbo.no>
  *
  * Licence: wxWindows Library Licence, Version 3.1
  */
@@ -56358,8 +56374,9 @@ G_END_DECLS
 
 #endif
 /*
- * Copyright (C) 2014-2022 Ole André Vadla Ravnås <oleavr@nowsecure.com>
+ * Copyright (C) 2014-2023 Ole André Vadla Ravnås <oleavr@nowsecure.com>
  * Copyright (C)      2017 Antonio Ken Iannillo <ak.iannillo@gmail.com>
+ * Copyright (C)      2023 Håvard Sørbø <havard@hsorbo.no>
  *
  * Licence: wxWindows Library Licence, Version 3.1
  */
@@ -56542,6 +56559,8 @@ GUM_API gboolean gum_arm64_writer_put_sub_reg_reg_reg (GumArm64Writer * self,
     arm64_reg dst_reg, arm64_reg left_reg, arm64_reg right_reg);
 GUM_API gboolean gum_arm64_writer_put_and_reg_reg_imm (GumArm64Writer * self,
     arm64_reg dst_reg, arm64_reg left_reg, guint64 right_value);
+GUM_API gboolean gum_arm64_writer_put_eor_reg_reg_reg (GumArm64Writer * self,
+    arm64_reg dst_reg, arm64_reg left_reg, arm64_reg right_reg);
 GUM_API gboolean gum_arm64_writer_put_tst_reg_imm (GumArm64Writer * self,
     arm64_reg reg, guint64 imm_value);
 GUM_API gboolean gum_arm64_writer_put_cmp_reg_reg (GumArm64Writer * self,
@@ -56893,8 +56912,11 @@ GUM_API void gum_stalker_transformer_transform_block (
 GUM_API gboolean gum_stalker_iterator_next (GumStalkerIterator * self,
     const cs_insn ** insn);
 GUM_API void gum_stalker_iterator_keep (GumStalkerIterator * self);
+GUM_API GumMemoryAccess gum_stalker_iterator_get_memory_access (
+    GumStalkerIterator * self);
 GUM_API void gum_stalker_iterator_put_callout (GumStalkerIterator * self,
     GumStalkerCallout callout, gpointer data, GDestroyNotify data_destroy);
+GUM_API csh gum_stalker_iterator_get_capstone (GumStalkerIterator * self);
 
 #define GUM_DECLARE_OBSERVER_INCREMENT(name) \
     GUM_API void gum_stalker_observer_increment_##name ( \
