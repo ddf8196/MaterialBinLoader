@@ -62,3 +62,5 @@ $ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/clang $Flags -DV1_20
 $ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/clang $Flags -DV1_20_32_03 ./src/*.c -o ./build/libmaterialbinloader-1.20.32.03-arm64.so
 # 1.20.40.24 arm64-v8a
 $ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/clang $Flags -DV1_20_40_24 ./src/*.c -o ./build/libmaterialbinloader-1.20.40.24-arm64.so
+# 1.20.50.20 arm64-v8a
+$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/clang $Flags -DV1_20_50_20 ./src/*.c -o ./build/libmaterialbinloader-1.20.50.20-arm64.so
