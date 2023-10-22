@@ -45,7 +45,141 @@ G_DEFINE_TYPE_EXTENDED(LoaderInvocationListener,
     #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x4C174FC)
     #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
 #endif
-
+#ifdef V1_19_60_03
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x8950318)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x776669C)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_19_62_01
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x894BDDC)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x776333C)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_19_63_01
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x894D058)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x7763820)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_19_70_22
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x7AC02B0)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x7A74764)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_19_70_02
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x791FE24)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x78D641C)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_19_71_02
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x7920BF8)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x78D71F0)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_19_73_02
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x7920DC4)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x78D73BC)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_19_80_02
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x7C99A24)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x7C4C224)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_19_81_01
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x7C997DC)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x7C4BFDC)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_19_83_01
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x7C9D48C)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x7C4FC8C)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_20_0_20
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x870D984)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x86561C4)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_20_0_01
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x83BAF14)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x8302340)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_20_1_02
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x83BB978)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x8302DA4)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_20_10_01
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x82B5050)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x80A54A4)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_20_12_01
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x82B5674)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x80A5AC8)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_20_30_20
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x865EF24)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x844ABA4)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_20_30_21
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x86E9DBC)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x84D5CAC)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_20_15_01
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x82B5610)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x80A5A64)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_20_30_22
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x873B960)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x851B86C)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_20_30_25
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x8760310)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x85495CC)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_20_40_20
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x882FB80)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x861A92C)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_20_30_02
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x845D7A4)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x8256A3C)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_20_40_22
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x88F1B58)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x86D97F8)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_20_31_01
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x845FAF0)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x8258D88)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_20_32_03
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x845F920)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x8258BB8)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_20_40_24
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x8909B2C)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x86F0CA8)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+#ifdef V1_20_50_20
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x9668B40)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0xC8E3CC4)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
 typedef enum _HookId HookId;
 enum _HookId {
     RESOURCE_PACK_MANAGER,

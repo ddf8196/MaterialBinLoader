@@ -1,16 +1,35 @@
 # MaterialBinLoader
-让渲染龙从资源包读取.material.bin文件
+Let Minecraft read the .material.bin file from the resource pack
 
-## 使用
-1. 从apk中解压出libminecraftpe.so
-2. 从[Releases](https://github.com/ddf8196/MaterialBinLoader/releases/latest)中下载或手动编译对应版本和架构的so
-3. `patchelf --add-needed libmaterialbinloader-版本-架构.so libminecraftpe.so`
-4. 将修改完的libminecraftpe.so和libmaterialbinloader-版本-架构.so打包回apk中
-5. 签名，安装
+## How to use
+1. Extract the libminecraftpe.so from the apk
+2. Download from [Releases](https://github.com/ENDERMANYK/MaterialBinLoader/releases/latest) or manually compile the .so file
+3. Download [patchelf](https://github.com/NixOS/patchelf/releases/latest) and execute the command : `patchelf --add-needed libmaterialbinloader-version-arm64.so libminecraftpe.so`
+4. Put the modified **libminecraftpe.so** and **libmaterialbinloader-version-arm64.so** back into the apk
+5. Signing, installing
 
-## 文件位置
-将.material.bin文件放入资源包的renderer/materials/目录中即可（与assets中目录结构相同）
+## How to load the shader
+Put the .material.bin file into the renderer/materials/ directory of the resource pack (the same directory structure as in assets)
 
-## 编译
-1. 安装[Android NDK](https://developer.android.google.cn/ndk/downloads/index.html)
-2. `./build.bat`
+```
+     yourshadername
+         |-renderer
+              |-materials
+                   |-Put the shader .material.bin files at here
+         |-manifest.json
+         |-textures(if you want add)
+         |-pack_icon_png
+```
+
+## How to compile
+#### Windows:
+1. Install [Android NDK](https://developer.android.com/ndk/downloads/index.html) and add `NDKfolder`\toolchains\llvm\prebuilt\windows-x86_64\bin to your PC's environment variables.
+2. Run `.\build.bat` file and wait it build.
+3. Find the compiled .so file in the `build` folder.
+#### Linux:
+1. Install [Android NDK](https://developer.android.com/ndk/downloads/index.html) and set `NDKfolder` as ANDROID_NDK_HOME
+2. Run `./build.sh` file and wait it build.
+3. Find the compiled .so file in the `build` folder.
+
+## Note
+**This Program is not affiliated with Mojang Studios**.
