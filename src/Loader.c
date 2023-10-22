@@ -180,6 +180,12 @@ G_DEFINE_TYPE_EXTENDED(LoaderInvocationListener,
     #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0xC8E3CC4)
     #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
 #endif
+#ifdef V1_20_50_21
+    #define RESOURCE_PACK_MANAGER_ADDRESS (minecraftpeBaseAddr + 0x9929E20)
+    #define READ_ASSET_FILE_ADDRESS       (minecraftpeBaseAddr + 0x6ABDC6C)
+    #define RESOURCE_LOCATION_ADDRESS     (gum_module_find_export_by_name("libminecraftpe.so", "_ZN16ResourceLocationC2ERKN4Core4PathE"))
+#endif
+
 typedef enum _HookId HookId;
 enum _HookId {
     RESOURCE_PACK_MANAGER,
@@ -247,6 +253,12 @@ void __attribute__((destructor)) dispose() {
     gum_deinit();
 }
 
+typedef struct _std_string {
+    size_t cap;
+    size_t size;
+    char* data;
+} std_string;
+
 bool std_string_is_short(void* str) {
     return (*(char*)str & 1) == 0;
 }
@@ -271,6 +283,30 @@ bool std_string_is_empty(void* str) {
     return std_string_size(str) == 0;
 }
 
+void std_string_constructor(std_string* str, const char* data) {
+    size_t dataLen = strlen(data);
+    str->cap = dataLen + 1;
+    if ((str->cap & 1) == 0) {
+        str->cap++;
+    }
+    str->size = dataLen;
+    str->data = (char*)malloc(str->cap);
+    strcpy(str->data, data);
+}
+
+void std_string_destructor(void* str) {
+    if (!std_string_is_short(str) && std_string_data(str) != NULL) {
+        free(std_string_data(str));
+    }
+}
+
+typedef struct _ResourceLocation {
+    int32_t mFileSystem;
+    std_string mPath;
+    uint64_t mPathHash;
+    uint64_t mFullHash;
+} ResourceLocation;
+
 //==========================================================================================================================================
 
 static void loader_invocation_listener_class_init(LoaderInvocationListenerClass* klass) {
@@ -293,6 +329,7 @@ static void loader_invocation_listener_on_enter(GumInvocationListener* listener,
     HookId hookId = GUM_IC_GET_FUNC_DATA(ic, HookId);
 
     switch (hookId) {
+        //ResourcePackManager::ResourcePackManager
         case RESOURCE_PACK_MANAGER: {
             gpointer needsToInitialize = gum_invocation_context_get_nth_argument(ic, 3);
 
@@ -316,7 +353,7 @@ static void loader_invocation_listener_on_enter(GumInvocationListener* listener,
                 return;
             }
 
-            if (strncmp(data, "renderer/materials/", 19) == 0 && strncmp(data + size - 13, ".material.bin", 13) == 0) {
+            if ((strncmp(data, "renderer/materials/", 19) == 0 || strncmp(data, "assets/renderer/materials/", 26) == 0) && strncmp(data + size - 13, ".material.bin", 13) == 0) {
                 #ifdef DEBUG
                     printf("filename=%s\n", data);
                 #endif
@@ -355,26 +392,31 @@ static void loader_invocation_listener_on_leave(GumInvocationListener* listener,
                     bool (*load)(void*, void*, void*) = (bool (*)(void*, void*, void*))*(vptr + 2); 
 
                     //void ResourceLocation::ResourceLocation(ResourceLocation* this, Core::Path* path)
-                    void (*ResourceLocation)(void*, void*) = (void (*)(void*, void*))ResourceLocation_ResourceLocation;
+                    void (*ResourceLocationConstructor)(void*, void*) = (void (*)(void*, void*))ResourceLocation_ResourceLocation;
 
-                    void* location = malloc(0x50);
-                    memset(location, 0, 0x50);
-                    ResourceLocation(location, state->filename);
+                    ResourceLocation location = {0};
+                    const char* data = std_string_data(state->filename);
+                    if (strncmp(data, "assets/", 7) != 0) {
+                        ResourceLocationConstructor(&location, state->filename);
+                    } else {
+                        std_string fileName = {0};
+                        std_string_constructor(&fileName, data + 7);
+                        ResourceLocationConstructor(&location, &fileName);
+                        std_string_destructor(&fileName);
+                    }
 
-                    void* resourceStream = malloc(3 * sizeof(size_t));
-                    memset(resourceStream, 0, 3 * sizeof(size_t));
-                    bool result = load(resourcePackManager, location, resourceStream);
+                    std_string resourceStream = {0};
+                    bool result = load(resourcePackManager, &location, &resourceStream);
+
+                    std_string_destructor(&location.mPath);
 
                     if (result) {
                         #ifdef DEBUG
                             printf("ResourcePackManager::load returned true\n");
                         #endif
-                        if (!std_string_is_empty(resourceStream)) {
-                            if (!std_string_is_short(state->retstr) && std_string_data(state->retstr) != NULL) {
-                                free(std_string_data(state->retstr));
-                            }
-
-                            memcpy(state->retstr, resourceStream, 3 * sizeof(size_t));
+                        if (!std_string_is_empty(&resourceStream)) {
+                            std_string_destructor(state->retstr);
+                            memcpy(state->retstr, &resourceStream, sizeof(resourceStream));
                         }
                     } else {
                         #ifdef DEBUG
@@ -385,9 +427,6 @@ static void loader_invocation_listener_on_leave(GumInvocationListener* listener,
                     #ifdef DEBUG
                         printf("\n");
                     #endif
-                    
-                    free(resourceStream);
-                    free(location);
                 }
             }
             break;
