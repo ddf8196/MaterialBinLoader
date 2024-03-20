@@ -1,13 +1,19 @@
+#pragma once
+
 #include <cstdint>
 #include <vector>
+#include <string>
 #include "frida-gum.h"
 
-inline uintptr_t FindSig(const GumModuleDetails* moduleInfo, const char* signature) {
+#define FindSignature FindSig
+#define FindSignatures(moduleInfo, ...) FindSigs(moduleInfo, {__VA_ARGS__})
+
+inline uintptr_t FindSig(const GumModuleDetails* moduleInfo, const std::string& signature) {
     uintptr_t moduleBase = (uintptr_t)moduleInfo->range->base_address;
     size_t moduleSize = moduleInfo->range->size;
 
     std::vector<uint16_t> pattern;
-    for (int i = 0; i < strlen(signature); i++) {
+    for (int i = 0; i < signature.size(); i++) {
         if (signature[i] == ' ')
             continue;
         if (signature[i] == '?') {
@@ -45,4 +51,14 @@ inline uintptr_t FindSig(const GumModuleDetails* moduleInfo, const char* signatu
     }
 
     return 0;
+}
+
+inline uintptr_t FindSigs(const GumModuleDetails* moduleInfo, const std::initializer_list<std::string>& signatures) {
+    uintptr_t ptr = 0;
+    for (auto& sig : signatures) {
+        if ((ptr = FindSig(moduleInfo, sig))) {
+            break;
+        }
+    }
+    return ptr;
 }
