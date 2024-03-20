@@ -98,9 +98,9 @@ void __attribute__((constructor)) init() {
             //1.20.50.20 preview
             "FF 03 04 D1 FD 7B 0C A9 FD 03 03 91 FC 5F 0D A9 F6 57 0E A9 F4 4F 0F A9 57 D0 3B D5 F3 03 08 AA E8 16 40 F9 A8 83 1F F8 FF 7F 02 A9",
             //1.20.80.20 preview
-            "FF ?? 04 D1 FD 7B ?? A9 FD ?? 03 91 FC 5F ?? A9 F6 57 ?? A9 F4 4F ?? A9 57 D0 3B D5 F3 03 08 AA E8 16 40 F9 A8 83 1F F8",
+            "FF 43 04 D1 FD 7B 0D A9 FD 43 03 91 FC 5F 0E A9 F6 57 0F A9 F4 4F 10 A9 57 D0 3B D5 F3 03 08 AA E8 16 40 F9 A8 83 1F F8 FF FF 02 A9",
             //1.20.80.21 preview
-            "FF 83 04 D1 FD 7B 0E A9 FD 83 03 91 FC 5F 0F A9 F6 57 10 A9 F4 4F 11 A9 57 D0 3B D5 F3 03 08 AA E8 16 40 F9 A8 83 1F F8"
+            "FF 83 04 D1 FD 7B 0E A9 FD 83 03 91 FC 5F 0F A9 F6 57 10 A9 F4 4F 11 A9 57 D0 3B D5 F3 03 08 AA E8 16 40 F9 A8 83 1F F8 FF FF 02 A9"
         );
     #else
         #error unsupported architecture
