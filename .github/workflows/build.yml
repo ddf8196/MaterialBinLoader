@@ -13,8 +13,6 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
         fail-fast: false
-        matrix:
-          abi: ["arm64-v8a"]
  
     steps:
       - name: Checkout
@@ -28,7 +26,7 @@ jobs:
           add-to-path: false
         
       - name: Build
-        run: ./build.sh ${{env.BUILD_TYPE}} ${{ matrix.abi }}
+        run: ./build.sh
         env:
           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
@@ -37,7 +35,7 @@ jobs:
         with:
           tag_name: ${{ github.run_number }}
           name: Release ${{ github.run_number }}
-          body: Support 1.20.51.01 and 1.20.60.25 preview
+          body: Support 1.20.80.20 preview and 1.20.80.21 preview
           draft: false
           prerelease: false
           files: |
