@@ -65,7 +65,7 @@ void __attribute__((constructor)) init() {
 	
         //ResourcePackManager::ResourcePackManager
         ResourcePackManager_ResourcePackManager = FindSignatures(minecraftpeDetails,
-            //1.20.50.20	//0x9668B40
+			//1.20.50.20	//0x9668B40
 			//1.20.73.01	//0x88BC608
 			//1.20.81.01	//0x8D83E80
 			//1.21.10.23	//
@@ -74,7 +74,7 @@ void __attribute__((constructor)) init() {
         );
 		
 		/*
-            //1.20.50.20 preview
+			//1.20.50.20 preview
 			//1.20.73.01	//sub_88BC608+228
 			FF 03 03 D1 FD 7B 07 A9		FD C3 01 91 F9 43 00 F9	
 			F8 5F 09 A9 F6 57 0A A9 	F4 4F 0B A9 59 D0 3B D5 
@@ -83,8 +83,8 @@ void __attribute__((constructor)) init() {
 		*/
 		
 		
-        //AppPlatform::readAssetFile
-        AppPlatform_readAssetFile = FindSignatures(minecraftpeDetails,
+		//AppPlatform::readAssetFile
+		AppPlatform_readAssetFile = FindSignatures(minecraftpeDetails,
 			//1.20.81.01
 			//1.20.80.21 preview
 			//1.21.10.23
@@ -97,7 +97,7 @@ void __attribute__((constructor)) init() {
 			//1.20.81.01	//0x5C12B88
 			"FF 83 04 D1 FD 7B 0E A9 FD 83 03 91 FC 5F 0F A9 F6 57 10 A9 F4 4F 11 A9 57 D0 3B D5 F3 03 08 AA E8 16 40 F9 A8 83 1F F8 FF FF 02 A9 A8 63 01 D1 E0 A3 00 91 22 04 80 52 E3 03 1F 2A 03 52 D3 95 A0 63 01 D1 BE 17 D2 95 C0 00 00 36 E1 07 04 D0 E0 03 13 AA 21 50 44 F9 D4 41 E5 95 1B 00 00 14"
 			
-									 FF 83 04 D1 FD 7B 0E A9 
+			                         FF 83 04 D1 FD 7B 0E A9 
 			FD 83 03 91 FC 5F 0F A9  F6 57 10 A9 F4 4F 11 A9 
 			57 D0 3B D5 F3 03 08 AA  E8 16 40 F9 A8 83 1F F8 
 			FF FF 02 A9 A8 63 01 D1  E0 A3 00 91 22 04 80 52 
@@ -108,10 +108,10 @@ void __attribute__((constructor)) init() {
 			//1.20.50.20 for real	//0xC8E3CC4
 			"FF 03 02 D1 FD 7B 02 A9 FD 83 00 91 FB 1B 00 F9 FA 67 04 A9 F8 5F 05 A9 F6 57 06 A9 F4 4F 07 A9 5B D0 3B D5 F3 03 08 AA 69 17 40 F9 A9 83 1F F8 09 40 54 39 E9 04 00 34 C8 E9 00 D0 F4 03 01 AA F5 03 00 AA 00 0D 41 F9 20 0A 00 B4 88 02 40 39 62 00 80 52 89 0A 40 F9 1F 01 00 72 21 15 94 9A C7 49 50 94 40 09 00 B4 F6 03 00 AA C8 49 50 94 F9 03 00 AA 3F 03 00 71 6D 03 00 54 E0 03 16 AA 47 16 52 94 7F FE 00 A9 7F 02 00 F9 A0 06 00 B4 28 7F 60 D3 E9 43 50 B2 E9 FD DF F2 1F 01 09 EB 62 09 00 54 F7 03 00 AA 38 7F 40 93 09 FD 60 D3 3F 5D 00 F1 E2 01 00 54 EA 03 00 91 29 7B 1F 53 59 01 40 B2 E9 03 00 39 48 02 00 B5 15 00 00 14 C1 DD 00 F0 E0 03 13 AA 21 30 45 F9 F0 28 50 94 2F 00 00 14 7F 7E 00 A9 7F 0A 00 F9 1D 00 00 14 08 43 00 91 1A ED 7C 92 E0 03 1A AA D8 28 50 94 48 03 40 B2 F9 03 00 AA F8 83 00 A9 E8 03 00 F9 E0 03 19 AA E1 03 1F 2A E2 03 18 AA F0 2B 50 94 68 02 40 39 3F 6B 38 38 68 00 00 36 60 0A 40 F9 A7 28 50 94 E0 03 C0 3D E1 03 17 AA E8 0B 40 F9 E2 03 18 AA 60 02 80 3D 68 0A 00 F9 68 02 40 39 69 0A 40 F9 1F 01 00 72 20 15 93 9A D8 28 50 94"
 
-		    //1.20.73.01   //0x5A0FEB0
+			//1.20.73.01   //0x5A0FEB0
             "FF 03 04 D1 FD 7B 0C A9 FD 03 03 91 FC 5F 0D A9 F6 57 0E A9 F4 4F 0F A9 57 D0 3B D5 F3 03 08 AA E8 16 40 F9 A8 83 1F F8 FF 7F 02 A9"
 	
-						FF 03 04 D1 	FD 7B 0C A9 FD 03 03 91 
+			            FF 03 04 D1 	FD 7B 0C A9 FD 03 03 91 
 			FC 5F 0D A9 F6 57 0E A9 	F4 4F 0F A9 57 D0 3B D5 
 			F3 03 08 AA E8 16 40 F9 	A8 83 1F F8	FF 7F 02 A9
 			
