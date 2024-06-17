@@ -61,17 +61,61 @@ void __attribute__((constructor)) init() {
     GumModuleMap* moduleMap = gum_module_map_new();
     const GumModuleDetails* minecraftpeDetails = gum_module_map_find(moduleMap, minecraftpeBaseAddr);
 
-    #if __aarch64__
+    #if __arm__
+        //ResourcePackManager::ResourcePackManager
+        ResourcePackManager_ResourcePackManager = FindSignatures(minecraftpeDetails,
+            //1.21.00.03	//05E64AC0  
+			"F0 B5 03 AF 2D E9 00 07 90 B0 05 46 AE 48 98 46 92 46 78 44 00 68 00 68 0F 90 08 69"
+        );
+
+        //AppPlatform::readAssetFile
+        AppPlatform_readAssetFile = FindSignatures(minecraftpeDetails,
+            //1.21.00.03	//38A4C54
+			"F0 B5 03 AF 4D F8 04 8D A0 B0 04 46 75 48 78 44 00 68 00 68 1F 90 00 20 CD E9 09 00"
+        );
+
+		
+		/*
+		    //ResourcePackManager::ResourcePackManager
+            //1.20.50.20 preview
+            "F0 B5 03 AF 2D E9 00 07 90 B0 05 46 AD 48 98 46 92 46 78 44 00 68 00 68 0F 90 08 69"
+		
+		
+		    AppPlatform_readAssetFile = FindSignatures(minecraftpeDetails,
+            //1.20.50.20 preview
+            "F0 B5 03 AF 4D F8 04 8D 9C B0 04 46 6E 48 78 44 00 68 00 68 1B 90 00 20 CD E9 08 00",
+            //1.20.50.03		//1.20.73.01
+            "F0 B5 03 AF 4D F8 04 8D 9C B0 04 46 5E 48 78 44 00 68 00 68 1B 90 00 20 CD E9 08 00",
+            //1.20.80.20 preview
+            "F0 B5 03 AF 4D F8 04 8D 9E B0 04 46 6E 48 78 44 00 68 00 68 1D 90 00 20 CD E9 09 00",
+            //1.20.80.21 preview //1.20.80.21
+            "F0 B5 03 AF 4D F8 04 8D A0 B0 04 46 85 48 78 44 00 68 00 68 1F 90 00 20 CD E9 09 00",
+		*/
+		
+		
+		//28x2x4=224
+		
+        if (ResourcePackManager_ResourcePackManager) {
+            ResourcePackManager_ResourcePackManager += 1;
+        }
+        if (AppPlatform_readAssetFile) {
+            AppPlatform_readAssetFile += 1;
+        }
+    #elif __aarch64__
 	
         //ResourcePackManager::ResourcePackManager
         ResourcePackManager_ResourcePackManager = FindSignatures(minecraftpeDetails,
+			//1.21.00.03	//0x8F567E0
+            "FF 03 03 D1 FD 7B 07 A9 FD C3 01 91 F9 43 00 F9 F8 5F 09 A9 F6 57 0A A9 F4 4F 0B A9 59 D0 3B D5 F6 03 03 2A 28 17 40 F9 F5 03 02 AA F3 03 00 AA A8 83 1F F8 28 10 40 F9"
+        );
+		
+		
 			//1.20.50.20	//0x9668B40
 			//1.20.73.01	//0x88BC608
 			//1.20.81.01	//0x8D83E80
 			//1.21.10.23	//
-			//1.21.00.03	//
-            "FF 03 03 D1 FD 7B 07 A9 FD C3 01 91 F9 43 00 F9 F8 5F 09 A9 F6 57 0A A9 F4 4F 0B A9 59 D0 3B D5 F6 03 03 2A 28 17 40 F9 F5 03 02 AA F3 03 00 AA A8 83 1F F8 28 10 40 F9"
-        );
+			
+		//56x2x4=448
 		
 		/*
 			//1.20.50.20 preview
@@ -85,13 +129,16 @@ void __attribute__((constructor)) init() {
 		
 		//AppPlatform::readAssetFile
 		AppPlatform_readAssetFile = FindSignatures(minecraftpeDetails,
-			//1.20.81.01
-			//1.20.80.21 preview
-			//1.21.10.23
-			//1.21.00.03
+			//1.21.00.03	//0x5CA7724
 			"FF 83 04 D1 FD 7B 0E A9 FD 83 03 91 FC 5F 0F A9 F6 57 10 A9 F4 4F 11 A9 57 D0 3B D5 F3 03 08 AA E8 16 40 F9 A8 83 1F F8 FF FF 02 A9"
 		);	
 		
+		
+			//1.20.81.01
+			//1.20.80.21 preview
+			//1.21.10.23
+			
+		//46x2x4=368
 		
 		/*
 			//1.20.81.01	//0x5C12B88
