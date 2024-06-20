@@ -71,7 +71,7 @@ void __attribute__((constructor)) init() {
         //AppPlatform::readAssetFile
         AppPlatform_readAssetFile = FindSignatures(minecraftpeDetails,
             //1.21.00.03	//0x38A4C54
-			"F0 B5 03 AF 4D F8 04 8D A0 B0 04 46 75 48 78 44 00 68 00 68 1F 90 00 20 CD E9 09 00"
+            "F0 B5 03 AF 4D F8 04 8D A0 B0 04 46 75 48 78 44 00 68 00 68 1F 90 00 20 CD E9 09 00"
         );
 
         if (ResourcePackManager_ResourcePackManager) {
