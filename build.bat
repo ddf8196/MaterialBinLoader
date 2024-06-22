@@ -6,7 +6,11 @@ set CLANG_OPTS_ARM64=--target=aarch64-linux-android21 -shared -s -O2 -fPIC -DAND
 if not exist "build" md "build"
 
 :: armeabi-v7a
+echo libmaterialbinloader-arm.so
 clang++.exe %CLANG_OPTS_ARM% ./src/*.cpp -o ./build/libmaterialbinloader-arm.so
 
 :: arm64-v8a
+echo libmaterialbinloader-arm64.so
 clang++.exe %CLANG_OPTS_ARM64% ./src/*.cpp -o ./build/libmaterialbinloader-arm64.so
+
+pause
