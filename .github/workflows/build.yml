@@ -35,7 +35,7 @@ jobs:
         with:
           tag_name: ${{ github.run_number }}
           name: Release ${{ github.run_number }}
-          body: Support 1.20.80.20 preview and 1.20.80.21 preview
+          body: Support 1.21.1 release and 1.21.10.24 preview
           draft: false
           prerelease: false
           files: |
