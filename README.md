@@ -2,20 +2,30 @@
 
 A Frida module let Minecraft read the .material.bin file from the resource pack, just like how we load third-party shaders before.
 
+> [!NOTE]
+> Release 10 supports 1.21.1, 1.21.2 release and 1.21.10.24 preview.
+
 ## How to use
 
 1. Extract libminecraftpe.so from the Minecraft APK.
-2. Download or manually compile the .so files from the [Releases](https://github.com/ddf8196/MaterialBinLoader/releases/latest).
+2. Download or manually compile the .so files from the [releases](https://github.com/ddf8196/MaterialBinLoader/releases/latest).
 3. Download [patchelf](https://github.com/NixOS/patchelf/releases/latest).
-4. For 32 bit Minecraft run the following command: `patchelf --add-needed libmaterialbinloader-arm.so libminecraftpe.so`. For 64 bit Minecraft run the following command: `patchelf --add-needed libmaterialbinloader-arm64.so libminecraftpe.so`
-5. Put the modified **libminecraftpe.so** and **libmaterialbinloader.so** file back into the apk
-6. Sign and install.
+4. For 32 bit (armeabi-v7a) Minecraft run the following command:
+```
+patchelf --add-needed libmaterialbinloader-arm.so libminecraftpe.so
+```
+5. For 64 bit (arm-v8a) Minecraft run the following command:
+```
+patchelf --add-needed libmaterialbinloader-arm64.so libminecraftpe.so
+```
+7. Put the modified **libminecraftpe.so** and **libmaterialbinloader.so** file back into the apk
+8. Sign and install.
 
 ## How to load the shader
 
 Put the .material.bin file into the renderer/materials/ directory of the resource pack (the same directory structure as in assets)
 
-```json
+```
      put your shader name here
          |-renderer
               |-materials
