@@ -1,3 +1,4 @@
+#include <cassert>
 #include <cstdio>
 #include <cstring>
 #include <cstdint>
@@ -7,6 +8,8 @@
 
 #include "frida-gum.h"
 #include "Util.h"
+#include "material.h"
+
 
 //==========================================================================================================================================
 
@@ -210,6 +213,7 @@ static void loader_invocation_listener_on_enter(GumInvocationListener* listener,
                 #ifdef DEBUG
                     printf("filename=%s\n", data);
                 #endif
+                
                 state->redirect = true;
                 state->filename = filename;
                 #if __arm__
@@ -219,6 +223,7 @@ static void loader_invocation_listener_on_enter(GumInvocationListener* listener,
                 #else
                     #error unsupported architecture
                 #endif
+
             }
 
             break;
@@ -260,12 +265,24 @@ static void loader_invocation_listener_on_leave(GumInvocationListener* listener,
                     std::string resourceStream;
                     bool result = load(resourcePackManager, &location, &resourceStream);
 
-                    if (result) {
+                    if (result && !resourceStream.empty()) {
+                        bool successful_update = true;
+
+                        struct Buffer outbufdata = {0,0};
+                        if (update_file(resourceStream.length(), (const uint8_t*)resourceStream.c_str(), &outbufdata) != 0) {
+                            puts("Updating failed!");
+                            successful_update = false;
+                            free_buf(outbufdata);
+                        }
+                        
                         #ifdef DEBUG
                             printf("ResourcePackManager::load returned true\n");
                         #endif
-                        if (!resourceStream.empty()) {
+                        if (!successful_update) {
                             state->retstr->assign(resourceStream);
+                        } else {
+                            state->retstr->assign((const char*)outbufdata.data, outbufdata.len);
+                            free_buf(outbufdata);
                         }
                     } else {
                         #ifdef DEBUG
