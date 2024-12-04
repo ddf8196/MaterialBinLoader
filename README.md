@@ -3,7 +3,7 @@
 A Frida module let Minecraft read the .material.bin file from the resource pack, just like how we load third-party shaders before.
 
 > [!NOTE]
-> Release 10 supports 1.21.1, 1.21.2, 1.21.20 release and 1.21.10.24 preview.
+> Release 15 supports 1.21.20, 1.21.30, 1.21.40, 1.21.50 release and 1.21.60.21 preview.
 
 <!--maybe check latest preview support?-->
 
