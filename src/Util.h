@@ -34,7 +34,7 @@ int callback(struct dl_phdr_info* dl_info, size_t _size, void* data) {
       struct ModuleRange* mod_range = (struct ModuleRange*) data;
       mod_range->addr = dl_info->dlpi_addr + phdr.p_paddr;
       mod_range->len = phdr.p_memsz;
-      // Stop dl_iteraye_phdr
+      // Stop dl_iterate_phdr
       return -1;
     }
   }
