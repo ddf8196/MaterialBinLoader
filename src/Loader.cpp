@@ -1,4 +1,5 @@
 #include <cassert>
+#include <chrono>
 #include <cstdio>
 #include <cstring>
 #include <cstdint>
@@ -9,7 +10,6 @@
 #include "frida-gum.h"
 #include "Util.h"
 #include "material.h"
-
 
 //==========================================================================================================================================
 
@@ -43,7 +43,7 @@ struct InvocationState {
     std::string* retstr;
 };
 
-GumAddress minecraftpeBaseAddr;
+
 GumAddress ResourcePackManager_ResourcePackManager;
 GumAddress AppPlatform_readAssetFile;
 
@@ -59,14 +59,14 @@ void __attribute__((constructor)) init() {
 
     gum_init();
 
-    minecraftpeBaseAddr = gum_module_find_base_address("libminecraftpe.so");
-
-    GumModuleMap* moduleMap = gum_module_map_new();
-    const GumModuleDetails* minecraftpeDetails = gum_module_map_find(moduleMap, minecraftpeBaseAddr);
-
+    ModuleRange minecraftpeDetails = get_module_range();
+    if (minecraftpeDetails.addr == 0 || minecraftpeDetails.len == 0) {
+        // Failed initialization
+        return;
+    }
     #if __arm__
         //ResourcePackManager::ResourcePackManager
-        ResourcePackManager_ResourcePackManager = FindSignatures(minecraftpeDetails,
+        ResourcePackManager_ResourcePackManager = FindSignatures(&minecraftpeDetails,
             //1.20.50-1.20.81
             //"F0 B5 03 AF 2D E9 00 07 90 B0 05 46 AD 48 98 46 92 46 78 44 00 68 00 68 0F 90 08 69",
             //1.21.0-1.21.31
@@ -82,7 +82,7 @@ void __attribute__((constructor)) init() {
         );
 
         //AppPlatform::readAssetFile
-        AppPlatform_readAssetFile = FindSignatures(minecraftpeDetails,
+        AppPlatform_readAssetFile = FindSignatures(&minecraftpeDetails,
             //1.20.50.21preview
             //"F0 B5 03 AF 4D F8 04 8D 9C B0 04 46 6E 48 78 44 00 68 00 68 1B 90 00 20 CD E9 08 00",
             //1.20.50-1.20.73
@@ -103,7 +103,7 @@ void __attribute__((constructor)) init() {
         }
     #elif __aarch64__
         //ResourcePackManager::ResourcePackManager
-        ResourcePackManager_ResourcePackManager = FindSignatures(minecraftpeDetails,
+        ResourcePackManager_ResourcePackManager = FindSignatures(&minecraftpeDetails,
             //1.20.50-1.21.50
             "FF 03 03 D1 FD 7B 07 A9 FD C3 01 91 F9 43 00 F9 F8 5F 09 A9 F6 57 0A A9 F4 4F 0B A9 59 D0 3B D5 F6 03 03 2A 28 17 40 F9 F5 03 02 AA F3 03 00 AA A8 83 1F F8 28 10 40 F9",
 			//1.21.60.21preview
@@ -111,7 +111,7 @@ void __attribute__((constructor)) init() {
         );
 
         //AppPlatform::readAssetFile
-        AppPlatform_readAssetFile = FindSignatures(minecraftpeDetails,
+        AppPlatform_readAssetFile = FindSignatures(&minecraftpeDetails,
             //1.20.50-1.20.73
             "FF 03 04 D1 FD 7B 0C A9 FD 03 03 91 FC 5F 0D A9 F6 57 0E A9 F4 4F 0F A9 57 D0 3B D5 F3 03 08 AA E8 16 40 F9 A8 83 1F F8 FF 7F 02 A9",
             //1.20.80-1.21.50
@@ -129,8 +129,6 @@ void __attribute__((constructor)) init() {
             printf("AppPlatform::readAssetFile not found\n");
         }
     #endif
-
-    g_object_unref(moduleMap);
     
     interceptor = gum_interceptor_obtain();
     listener = (GumInvocationListener*) g_object_new(LOADER_TYPE_INVOCATION_LISTENER, NULL);
