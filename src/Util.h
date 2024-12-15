@@ -4,7 +4,6 @@
 #include <vector>
 #include <string>
 #include "frida-gum.h"
-#include <bits/elf_common.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <link.h>
@@ -27,6 +26,8 @@ int callback(struct dl_phdr_info* dl_info, size_t _size, void* data) {
   
   for (size_t i = 0; i < dl_info->dlpi_phnum; i++) {
     const ElfW(Phdr) phdr = dl_info->dlpi_phdr[i];
+    // Im so sorry
+    #define PF_X    0x1
     // Check if we found a loadable and executable section
     // should be where the code is at
     if (phdr.p_type == PT_LOAD && phdr.p_flags & PF_X) {   
