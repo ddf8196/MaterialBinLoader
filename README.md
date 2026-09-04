@@ -51,6 +51,16 @@ Put the .material.bin file into the renderer/materials/ directory of the resourc
 2. Run `./build.sh` file and wait it build.
 3. Find the compiled .so file in the `build` folder.
 
+## termux 
+1. ```
+   pkg install clang ndk-sysroot
+   ```
+2. ```
+   chmod +x termux_build.sh
+   ./termux_build.sh
+   ```
+   
+
 ## Note
 
 **This Program is not affiliated with Mojang Studios**.
